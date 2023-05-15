@@ -1,0 +1,43 @@
+import pygame
+import random
+
+# 初始化 Pygame
+pygame.init()
+
+# 設定視窗大小和顯示文字的字型
+win_size = (500, 400)
+font = pygame.font.Font('arial.ttf', 36)
+
+# 設定角色等級和抽卡機率
+levels = ["5 星", "4 星"]
+probabilities = [0.006, 0.994]
+
+# 定義抽卡函數
+def draw_card():
+    # 隨機獲得一個角色等級
+    level = random.choices(levels, probabilities)[0]
+
+    # 顯示抽卡結果
+    text = font.render(f"恭喜你獲得了一個 {level} 角色！", True, (0, 0, 0))
+    text_rect = text.get_rect(center=(win_size[0]/2, win_size[1]/2))
+    screen.blit(text, text_rect)
+    pygame.display.update()
+
+# 創建視窗
+screen = pygame.display.set_mode(win_size)
+pygame.display.set_caption("抽卡模擬器")
+
+# 遊戲迴圈
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            draw_card()
+
+    # 更新畫面
+    pygame.display.update()
+
+# 關閉 Pygame
+pygame.quit()
